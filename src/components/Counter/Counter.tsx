@@ -1,34 +1,44 @@
-import { InputWrapper, InputLabel, InputComponent, ErrorText } from "./styles";
+import { useAppDispatch, useAppSelector } from "store/hooks"
+import {
+  counterSliceActions,
+  counterSliceSelectors,
+} from "store/redux/counter/counterSlice"
+import Button from "components/Button/Button"
+import { CounterWrapper, Count, ButtonControl } from "./styles"
 
-import { type InputProps } from "./types";
+function Counter() {
+  const dispatch = useAppDispatch()
+  const count = useAppSelector(counterSliceSelectors.count)
+  const onPlus = () => {
+    dispatch(counterSliceActions.plus())
+  }
+  const onMinus = () => {
+    dispatch(counterSliceActions.minus())
+  }
 
-function Input({
-  id,
-  name,
-  type = "text",
-  placeholder,
-  label,
-  disabled = false,
-  error = undefined,
-  value,
-  onChange,
-}: InputProps) {
+  const onMultiply = () => {
+    dispatch(counterSliceActions.multiply(2))
+  }
+  const onDivide = () => {
+    dispatch(counterSliceActions.divide(2))
+  }
   return (
-    <InputWrapper>
-      <InputLabel htmlFor={id}>{label}</InputLabel>
-      <InputComponent
-        disabled={disabled}
-        $error={error}
-        id={id}
-        name={name}
-        type={type}
-        placeholder={placeholder}
-        value={value}
-        onChange={onChange}
-      />
-      {!!error && <ErrorText>{error}</ErrorText>}
-    </InputWrapper>
-  );
+    <CounterWrapper>
+      <ButtonControl>
+        <Button name="/" onClick={onDivide} />
+      </ButtonControl>
+      <ButtonControl>
+        <Button name="-" onClick={onMinus} />
+      </ButtonControl>
+      <Count className="count">{count}</Count>
+      <ButtonControl>
+        <Button name="+" onClick={onPlus} />
+      </ButtonControl>
+      <ButtonControl>
+        <Button name="*" onClick={onMultiply} />
+      </ButtonControl>
+    </CounterWrapper>
+  )
 }
 
-export default Input;
+export default Counter

@@ -1,53 +1,26 @@
 import styled from "@emotion/styled";
 
-interface InputComponentProps {
-  $error?: string | undefined;
-}
-
-const generateInputBorder = (
-  error: string | undefined,
-  disabled: boolean | undefined
-) => {
-  if (disabled) {
-    return "#acacacff";
-  } else {
-    if (!!error) {
-      return "#ff6868ff";
-    } else {
-      return "#3f3f3f";
-    }
-  }
-};
-
-export const InputWrapper = styled.div`
+export const CounterWrapper = styled.div`
   display: flex;
-  flex-direction: column;
-  gap: 4px;
-  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  min-width: 400px;
+  max-width: 1000px;
+  height: fit-content;
+  border: 1px solid black;
+  background-color: white;
+  color: black;
+  padding: 20px;
+  border-radius: 10px;
 `;
 
-export const InputLabel = styled.label`
-  font-size: 16px;
-  color: hsl(0, 0%, 44%);
+export const ButtonControl = styled.div`
+  min-width: 100px;
+  max-width: 100px;
 `;
 
-export const InputComponent = styled.input<InputComponentProps>`
-  width: 100%;
-  height: 50px;
-  border: 1px solid
-    ${({ disabled, $error }) => generateInputBorder($error, disabled)};
-  border-radius: 4px;
-  padding: 12px;
-  outline: none;
-
-  &::placeholder {
-    color: #6f6f6f;
-    font-size: 16px;
-  }
-`;
-
-export const ErrorText = styled.div`
-  height: 18px;
-  font-size: 16px;
-  color: #ff6868ff;
+export const Count = styled.p`
+  font-size: 40px;
+  font-weight: bold;
 `;
