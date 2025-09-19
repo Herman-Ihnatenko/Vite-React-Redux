@@ -22,6 +22,9 @@ export const counterSlice = createAppSlice({
     divide: create.reducer((state: CounterSliceState, actions: PayloadAction<number>) => {
       state.count = Number((state.count / actions.payload).toFixed(2))
     }),
+    reset: create.reducer((state: CounterSliceState) => {
+      state.count = 0
+    }),
   }),
   selectors: {
     count: (state: CounterSliceState) => {
