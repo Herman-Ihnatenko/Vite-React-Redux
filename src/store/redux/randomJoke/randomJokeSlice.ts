@@ -19,12 +19,6 @@ export const randomJokeSlice = createAppSlice({
     getRandomJokes: create.asyncThunk(
       async (dataFromComponent: any, { rejectWithValue }) => {
         console.log(dataFromComponent)
-        // Пример как делать POST запрос
-        // const response = await axios.post(
-        //   "https://official-joke-api.appspot.com/random_joke",
-        //   dataFromComponent,
-        // )
-
         try {
           const response = await axios.get(
             "https://official-joke-api.appspot.com/random_joke",
@@ -35,13 +29,6 @@ export const randomJokeSlice = createAppSlice({
           console.log(error)
           return rejectWithValue(error)
         }
-        // Без обрабоки try ctacht
-        // const response = await axios.post(
-        //   "https://official-joke-api.appspot.com/random_joke",
-        //   dataFromComponent,
-        // )
-
-        // return response
       },
       {
         pending: (state: RandomJokeSliceState) => {
@@ -87,5 +74,4 @@ export const randomJokeSlice = createAppSlice({
 })
 
 export const randomJokesActions = randomJokeSlice.actions
-
 export const randomJokesSelectors = randomJokeSlice.selectors

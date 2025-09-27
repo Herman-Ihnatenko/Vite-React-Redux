@@ -1,6 +1,5 @@
 export interface RandomJoke {
   id: string
-  // joke - совмещенная строка из 2 св-в punchline + setup
   joke: string
 }
 
