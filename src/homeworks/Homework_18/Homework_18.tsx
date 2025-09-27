@@ -17,37 +17,42 @@ import {
   JokeWrapper,
   ButtonControl,
 } from "./styles"
-
 function Homework_18() {
   const dispatch = useAppDispatch()
-  const { jokes, error, isFetching } = useAppSelector(
+  const { jokes, error } = useAppSelector(
     randomJokesSelectors.jokesData,
   )
 
   const getRandomJoke = () => {
-    dispatch(
-      randomJokesActions.getRandomJokes("Some photo"),
-    )
+    dispatch(randomJokesActions.getRandomJokes("Some photo"))
   }
 
   const deleteAllJokes = () => {
     dispatch(randomJokesActions.deleteAllJokes())
   }
 
-  const randomJokes = jokes.map((randomJoke: RandomJoke, index: number) => {
-    const deleteJoke = () => {
-      dispatch(randomJokesActions.deleteJoke(randomJoke.id))
-    }
+  const handleDeleteJoke = (jokeId: string) => {
+    dispatch(randomJokesActions.deleteJoke(jokeId))
+  }
 
-    return (
+  const handleGetRandomJoke = () => {
+    getRandomJoke()
+  }
+
+  const renderJokes = () => {
+    return jokes.map((randomJoke: RandomJoke, index: number) => (
       <JokeWrapper key={randomJoke.id}>
         <JokeText>{`${index + 1}. ${randomJoke.joke}`}</JokeText>
         <ButtonControl>
-          <Button isRed onClick={deleteJoke} name="Delete Joke" />
+          <Button
+            isRed
+            onClick={() => handleDeleteJoke(randomJoke.id)}
+            name="Delete Joke"
+          />
         </ButtonControl>
       </JokeWrapper>
-    )
-  })
+    ))
+  }
 
   useEffect(() => {
     if (error) {
@@ -57,21 +62,18 @@ function Homework_18() {
 
   return (
     <PageWrapper>
-      <JokeCard>
-        {jokes.length > 0 && (
-          <Button isRed onClick={deleteAllJokes} name="Delete All Jokes" />
-        )}
-        <RandomJokeContainer>
-          {jokes.length > 0 && randomJokes}
-        </RandomJokeContainer>
-        <Button
-          disabled={isFetching}
-          name="Get Random Joke"
-          onClick={getRandomJoke}
-        />
-      </JokeCard>
+      <RandomJokeContainer>
+        <JokeCard>
+          <ButtonControl>
+            <Button onClick={handleGetRandomJoke} name="Get Random Joke" />
+          </ButtonControl>
+          {renderJokes()}
+          <ButtonControl>
+            <Button onClick={deleteAllJokes} name="Delete All Jokes" isRed />
+          </ButtonControl>
+        </JokeCard>
+      </RandomJokeContainer>
     </PageWrapper>
   )
 }
-
 export default Homework_18
